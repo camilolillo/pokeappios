@@ -1,9 +1,3 @@
-//
-//  SplashView.swift
-//  Pokedex
-//
-//  Created by Camilo Lillo on 17-12-25.
-//
 import SwiftUI
 
 struct SplashView: View {
@@ -12,12 +6,11 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            Color.white
+            Color.primaryColor
                 .ignoresSafeArea()
-            VStack(spacing: 12) {
-                Text("SPLASH")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+            HStack(alignment: .center) {
+                Image("pokeball")
+                Image("pokedex")
             }
         }
         .onAppear() {

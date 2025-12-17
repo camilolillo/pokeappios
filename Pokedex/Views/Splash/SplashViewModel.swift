@@ -1,16 +1,10 @@
-//
-//  SplashViewModel.swift
-//  Pokedex
-//
-//  Created by Camilo Lillo on 17-12-25.
-//
 import Combine
 
 final class SplashViewModel: ObservableObject {
 
-    private let onCheckSession: () -> Void
+    private let onCheckSession: (Bool) -> Void
     
-    init(onCheckSession: @escaping () -> Void) {
+    init(onCheckSession: @escaping (Bool) -> Void) {
         self.onCheckSession = onCheckSession
     }
 
@@ -19,6 +13,6 @@ final class SplashViewModel: ObservableObject {
     }
 
     private func checkSession() {
-        onCheckSession()
+        onCheckSession(false)
     }
 }

@@ -1,9 +1,3 @@
-//
-//  RootView.swift
-//  Pokedex
-//
-//  Created by Camilo Lillo on 17-12-25.
-//
 import SwiftUI
 
 enum AppRoute {
@@ -18,7 +12,10 @@ struct RootView: View {
         NavigationView {
             switch route {
             case .splash:
-                SplashView(viewModel: SplashViewModel { route = .home })
+                SplashView(viewModel: SplashViewModel { isSessionActive in
+                        route = isSessionActive ? .home : .login
+                    }
+                )
             case .login:
                 LoginView(viewModel: LoginViewModel { route = .home })
             case .home:
