@@ -13,16 +13,16 @@ enum AppRoute {
 }
 
 struct RootView: View {
-    @State private var route: AppRoute = .login
+    @State private var route: AppRoute = .splash
     var body: some View {
         NavigationView {
             switch route {
             case .splash:
-                SplashView(viewModel: SplashViewModel())
+                SplashView(viewModel: SplashViewModel { route = .home })
             case .login:
-                LoginView(viewModel: LoginViewModel())
+                LoginView(viewModel: LoginViewModel { route = .home })
             case .home:
-                HomeView(viewModel: HomeViewModel())
+                HomeView(viewModel: HomeViewModel { route = .splash })
             }
         }
     }

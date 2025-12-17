@@ -14,12 +14,14 @@ struct SplashView: View {
         ZStack {
             Color.white
                 .ignoresSafeArea()
-
             VStack(spacing: 12) {
                 Text("SPLASH")
                     .font(.largeTitle)
                     .fontWeight(.bold)
             }
+        }
+        .onAppear() {
+            viewModel.onAppear()
         }
     }
 }

@@ -13,7 +13,6 @@ struct LoginView: View {
         ZStack {
             Color.white
                 .ignoresSafeArea()
-
             VStack(spacing: 12) {
                 Text("LOGIN")
                     .font(.largeTitle)

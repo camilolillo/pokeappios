@@ -6,4 +6,10 @@
 //
 import Combine
 
-final class LoginViewModel: ObservableObject { }
+final class LoginViewModel: ObservableObject {
+    private let onLoginSuccess: () -> Void
+    
+    init(onLoginSuccess: @escaping () -> Void) {
+        self.onLoginSuccess = onLoginSuccess
+    }
+}

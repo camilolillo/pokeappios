@@ -10,12 +10,14 @@ struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     
     var body: some View {
-        Color.white
-            .ignoresSafeArea()
-        VStack {
-            Text("HOME")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+        ZStack {
+            Color.white
+                .ignoresSafeArea()
+            VStack (spacing: 12) {
+                Text("HOME")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+            }
         }
     }
 }

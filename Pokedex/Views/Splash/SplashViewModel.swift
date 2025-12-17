@@ -8,13 +8,17 @@ import Combine
 
 final class SplashViewModel: ObservableObject {
 
-    @Published private(set) var hasActiveSession: Bool?
+    private let onCheckSession: () -> Void
+    
+    init(onCheckSession: @escaping () -> Void) {
+        self.onCheckSession = onCheckSession
+    }
 
     func onAppear() {
         checkSession()
     }
 
     private func checkSession() {
-        hasActiveSession = true
+        onCheckSession()
     }
 }
