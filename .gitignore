@@ -1,0 +1,70 @@
+# =========================
+# Xcode
+# =========================
+
+# User-specific settings
+xcuserdata/
+
+# Build products
+DerivedData/
+build/
+
+# Xcode project files (keep the important ones)
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+
+# Workspace
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+
+# Legacy / temporary files
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.hmap
+*.xccheckout
+*.xcscmblueprint
+
+# =========================
+# Swift / SwiftPM
+# =========================
+
+.build/
+Packages/
+Package.resolved
+
+# =========================
+# App artifacts
+# =========================
+
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# =========================
+# Playgrounds
+# =========================
+
+timeline.xctimeline
+playground.xcworkspace
+
+# =========================
+# Tooling
+# =========================
+
+# Carthage
+Carthage/Build/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Code Injection
+iOSInjectionProject/
+
