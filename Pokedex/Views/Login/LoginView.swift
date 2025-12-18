@@ -11,10 +11,7 @@ struct LoginView: View {
             Color.primaryColor
                 .ignoresSafeArea()
             VStack(spacing: 12) {
-                HStack(alignment: .center) {
-                    Image("pokeball")
-                    Image("pokedex")
-                }
+                IsoLogo()
                 VStack(alignment: .center, spacing: 8) {
                     TextField("Usuario", text: $userName)
                         .textFieldStyle(.roundedBorder)

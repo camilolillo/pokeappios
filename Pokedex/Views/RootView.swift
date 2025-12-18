@@ -19,10 +19,12 @@ struct RootView: View {
                 }
             case .login:
                 LoginWireframe.createModule(modelContext: modelContext) {
-                    self.route = .home
+                    route = .home
                 }
             case .home:
-                HomeView(viewModel: HomeViewModel { route = .splash })
+                HomeWireframe.createModule(modelContext: modelContext) {
+                    route = .splash
+                }
             }
         }
     }

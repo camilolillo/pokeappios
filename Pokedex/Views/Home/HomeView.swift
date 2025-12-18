@@ -5,13 +5,32 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color.white
+            Color.primaryColor
                 .ignoresSafeArea()
             VStack (spacing: 12) {
-                Text("HOME")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                HStack {
+                    IsoLogo()
+                    Spacer()
+                    signOutButton
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+                Spacer()
             }
         }
+    }
+    
+    private var signOutButton: some View {
+        Button(action: onSignOutButtonPressed) {
+            Text("Sign Out")
+                .font(.headline)
+                .foregroundColor(Color.white)
+        }
+    }
+}
+
+extension HomeView {
+    func onSignOutButtonPressed() {
+        viewModel.onSignOutButtonPressed()
     }
 }

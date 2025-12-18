@@ -8,10 +8,7 @@ struct SplashView: View {
         ZStack {
             Color.primaryColor
                 .ignoresSafeArea()
-            HStack(alignment: .center) {
-                Image("pokeball")
-                Image("pokedex")
-            }
+            IsoLogo()
         }
         .onAppear() {
             viewModel.onAppear()
