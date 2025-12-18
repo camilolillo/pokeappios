@@ -17,6 +17,8 @@ struct HomeView: View {
                 .padding(.top, 16)
                 Spacer()
             }
+        }.task {
+            await viewModel.onAppear()
         }
     }
     
