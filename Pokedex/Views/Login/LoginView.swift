@@ -28,7 +28,10 @@ struct LoginView: View {
                         .foregroundColor(Color.white)
                 }
                 .padding(.top, 12)
-                .alert("Campos incompletos", isPresented: $viewModel.showEmptyFieldsAlert) {
+                .alert(
+                    viewModel.alertState?.title ?? "",
+                    isPresented: .constant(viewModel.alertState != nil)
+                ) {
                     Button("OK", role: .cancel) {}
                 } message: {
                     Text("Debes ingresar usuario y contraseña.")

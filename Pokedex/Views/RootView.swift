@@ -12,12 +12,13 @@ struct RootView: View {
         NavigationView {
             switch route {
             case .splash:
-                SplashView(viewModel: SplashViewModel { isSessionActive in
-                        route = isSessionActive ? .home : .login
-                    }
-                )
+                SplashWireframe.createModule() { isSessionActive in
+                    route = isSessionActive ? .home : .login
+                }
             case .login:
-                LoginView(viewModel: LoginViewModel { route = .home })
+                LoginWireframe.createModule {
+                    self.route = .home
+                }
             case .home:
                 HomeView(viewModel: HomeViewModel { route = .splash })
             }
