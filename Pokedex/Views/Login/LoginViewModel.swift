@@ -27,4 +27,7 @@ extension LoginViewModel {
             }
         }
     }
+    func onAlertButtonPressed() {
+        alertState = nil
+    }
 }

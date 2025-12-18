@@ -14,18 +14,10 @@ protocol LocalStorageManagerProtocol {
 
 final class LocalStorageManager {
 
-    static let shared = LocalStorageManager()
-
-    private let container: ModelContainer
     private let context: ModelContext
 
-    private init() {
-        do {
-            container = try ModelContainer(for: UserSession.self)
-            context = ModelContext(container)
-        } catch {
-            fatalError("Failed to initialize SwiftData: \(error)")
-        }
+    init(context: ModelContext) {
+        self.context = context
     }
 }
 
@@ -34,7 +26,12 @@ extension LocalStorageManager: LocalStorageManagerProtocol {
     func saveSession(username: String) -> Result<Void, LocalStorageError> {
         let session = UserSession(username: username, isLoggedIn: true)
         context.insert(session)
-        return .success(())
+        do {
+            try context.save()
+            return .success(())
+        } catch {
+            return .failure(.saveFailed)
+        }
     }
 
     func fetchSession() -> Result<UserSession?, LocalStorageError> {
@@ -52,9 +49,11 @@ extension LocalStorageManager: LocalStorageManagerProtocol {
         do {
             let sessions = try context.fetch(descriptor)
             sessions.forEach { context.delete($0) }
+            try context.save()
             return .success(())
         } catch {
             return .failure(.deleteFailed)
         }
     }
 }
+

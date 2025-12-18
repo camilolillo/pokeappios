@@ -7,5 +7,6 @@ struct PokedexApp: App {
         WindowGroup {
             RootView()
         }
+        .modelContainer(for: UserSession.self)
     }
 }

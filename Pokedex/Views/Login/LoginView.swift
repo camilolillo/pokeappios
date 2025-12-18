@@ -32,7 +32,9 @@ struct LoginView: View {
                     viewModel.alertState?.title ?? "",
                     isPresented: .constant(viewModel.alertState != nil)
                 ) {
-                    Button("OK", role: .cancel) {}
+                    Button("OK", role: .cancel) {
+                        viewModel.onAlertButtonPressed()
+                    }
                 } message: {
                     Text("Debes ingresar usuario y contraseña.")
                 }

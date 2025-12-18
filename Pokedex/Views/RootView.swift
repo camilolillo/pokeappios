@@ -8,15 +8,17 @@ enum AppRoute {
 
 struct RootView: View {
     @State private var route: AppRoute = .splash
+    @Environment(\.modelContext) private var modelContext
+
     var body: some View {
         NavigationView {
             switch route {
             case .splash:
-                SplashWireframe.createModule() { isSessionActive in
+                SplashWireframe.createModule(modelContext: modelContext) { isSessionActive in
                     route = isSessionActive ? .home : .login
                 }
             case .login:
-                LoginWireframe.createModule {
+                LoginWireframe.createModule(modelContext: modelContext) {
                     self.route = .home
                 }
             case .home:
