@@ -7,6 +7,11 @@ struct PokedexApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: UserSession.self)
+        .modelContainer(
+            for: [
+                UserSession.self,
+                FavoritePokemonItem.self
+            ]
+        )
     }
 }

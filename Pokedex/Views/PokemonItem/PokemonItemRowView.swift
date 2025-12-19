@@ -3,9 +3,10 @@ import SwiftUI
 struct PokemonItemRowView: View {
 
     let dataModel: PokemonItemRowDataModel
+    let onFavoriteTapped: () -> Void
 
     var body: some View {
-        HStack(){
+        HStack {
             AsyncImage(url: dataModel.imageURL) { image in
                 image
                     .resizable()
@@ -14,12 +15,20 @@ struct PokemonItemRowView: View {
                 ProgressView()
             }
             .frame(width: 72, height: 72)
+
             Spacer()
-            VStack(alignment: .trailing) {
+
+            VStack(alignment: .trailing, spacing: 4) {
+                Button {
+                    onFavoriteTapped()
+                } label: {
+                    Image(systemName: dataModel.favorite ? "heart.fill" : "heart")
+                        .foregroundColor(Color.primaryColor)
+                }
+                .buttonStyle(.plain)
                 Text(dataModel.idText)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Spacer()
                 Text(dataModel.name)
                     .font(.headline)
             }

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
+
     @StateObject var viewModel: HomeViewModel
     @State private var selectedPokemon: Pokemon?
 
@@ -8,19 +9,16 @@ struct HomeView: View {
         ZStack {
             Color.primaryColor
                 .ignoresSafeArea()
-            VStack (spacing: 12) {
-                HStack {
-                    IsoLogo()
-                    Spacer()
-                    signOutButton
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 12)
+
+            VStack(spacing: 12) {
+                header
+
                 pokemonScrollView
-                .padding(.top, 12)
-                .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    .padding(.horizontal, 24)
             }
-        }.task {
+        }
+        .task {
             await viewModel.onAppear()
         }
         .sheet(item: $selectedPokemon) { pokemon in
@@ -29,47 +27,73 @@ struct HomeView: View {
                 .presentationDragIndicator(.visible)
                 .presentationBackground(Color.primaryColor)
         }
-
     }
-    
-    private var signOutButton: some View {
+}
+
+private extension HomeView {
+
+    var header: some View {
+        HStack {
+            IsoLogo()
+            Spacer()
+            signOutButton
+        }
+        .padding(.horizontal, 24)
+        .padding(.top, 12)
+    }
+
+    var signOutButton: some View {
         Button(action: onSignOutButtonPressed) {
             Text("Sign Out")
                 .font(.headline)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
         }
     }
-    
-    private var pokemonScrollView: some View {
+
+    func onSignOutButtonPressed() {
+        viewModel.onSignOutButtonPressed()
+    }
+}
+
+private extension HomeView {
+
+    var pokemonScrollView: some View {
         ScrollView {
             LazyVStack(spacing: 12) {
                 ForEach(viewModel.items) { item in
-                    PokemonItemRowView(
-                        dataModel: .init(item: item)
-                    ).onAppear {
-                        if item.id == viewModel.items.last?.id {
-                            Task {
-                                await viewModel.loadPokemons()
-                            }
-                        }
-                    }
-                    .onTapGesture {
-                        Task {
-                            do {
-                                selectedPokemon = try await viewModel.onPokemonSelected(item: item)
-                            } catch {
-                                print(error)
-                            }
-                        }
-                    }
+                    pokemonRow(item: item)
                 }
             }
         }
     }
 }
 
-extension HomeView {
-    func onSignOutButtonPressed() {
-        viewModel.onSignOutButtonPressed()
+private extension HomeView {
+
+    func pokemonRow(item: PokemonItem) -> some View {
+        let rowData = PokemonItemRowDataModel(item: item)
+
+        return PokemonItemRowView(
+            dataModel: rowData,
+            onFavoriteTapped: {
+                viewModel.onFavoriteTapped(itemId: item.id)
+            }
+        )
+        .onAppear {
+            if item.id == viewModel.items.last?.id {
+                Task {
+                    await viewModel.loadPokemons()
+                }
+            }
+        }
+        .onTapGesture {
+            Task {
+                do {
+                    selectedPokemon = try await viewModel.onPokemonSelected(item: item)
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
 }
