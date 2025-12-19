@@ -11,3 +11,11 @@ struct Pokemon {
     let description: String
     let stats: [PokemonStat]
 }
+
+extension Pokemon: Identifiable { }
+
+extension Pokemon {
+    var idText: String {
+        String(format: "#%03d", id)
+    }
+}

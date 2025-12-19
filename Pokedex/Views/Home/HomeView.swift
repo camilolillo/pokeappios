@@ -2,7 +2,8 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
-    
+    @State private var selectedPokemon: Pokemon?
+
     var body: some View {
         ZStack {
             Color.primaryColor
@@ -22,6 +23,13 @@ struct HomeView: View {
         }.task {
             await viewModel.onAppear()
         }
+        .sheet(item: $selectedPokemon) { pokemon in
+            PokemonDetailView(pokemon: pokemon)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(Color.primaryColor)
+        }
+
     }
     
     private var signOutButton: some View {
@@ -47,13 +55,10 @@ struct HomeView: View {
                     }
                     .onTapGesture {
                         Task {
-                            Task {
-                                do {
-                                    let pokemon = try await viewModel.onPokemonSelected(item: item)
-                                    print(pokemon)
-                                } catch {
-                                    print(error)
-                                }
+                            do {
+                                selectedPokemon = try await viewModel.onPokemonSelected(item: item)
+                            } catch {
+                                print(error)
                             }
                         }
                     }
