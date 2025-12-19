@@ -2,9 +2,11 @@ protocol CheckSessionProtocol {
     func isSessionActive() -> Bool
 }
 
-struct CheckSession: CheckSessionProtocol {
+struct CheckSession {
     var localStorageManager: LocalStorageManagerProtocol
-    
+}
+
+extension CheckSession: CheckSessionProtocol {
     func isSessionActive() -> Bool {
         let result = localStorageManager.fetchSession()
         switch result {

@@ -14,8 +14,10 @@ struct HomeView: View {
                     signOutButton
                 }
                 .padding(.horizontal, 24)
-                .padding(.top, 16)
-                Spacer()
+                .padding(.top, 12)
+                pokemonScrollView
+                .padding(.top, 12)
+                .padding(.horizontal, 24)
             }
         }.task {
             await viewModel.onAppear()
@@ -27,6 +29,36 @@ struct HomeView: View {
             Text("Sign Out")
                 .font(.headline)
                 .foregroundColor(Color.white)
+        }
+    }
+    
+    private var pokemonScrollView: some View {
+        ScrollView {
+            LazyVStack(spacing: 12) {
+                ForEach(viewModel.items) { item in
+                    PokemonItemRowView(
+                        dataModel: .init(item: item)
+                    ).onAppear {
+                        if item.id == viewModel.items.last?.id {
+                            Task {
+                                await viewModel.loadPokemons()
+                            }
+                        }
+                    }
+                    .onTapGesture {
+                        Task {
+                            Task {
+                                do {
+                                    let pokemon = try await viewModel.onPokemonSelected(item: item)
+                                    print(pokemon)
+                                } catch {
+                                    print(error)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

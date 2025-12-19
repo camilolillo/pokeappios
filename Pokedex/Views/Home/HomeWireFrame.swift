@@ -1,5 +1,6 @@
 import SwiftData
 
+@MainActor
 struct HomeWireframe {
     static func createModule(
         modelContext: ModelContext,
@@ -10,8 +11,9 @@ struct HomeWireframe {
         
         let pokemonService = PokemonService()
         let listPokemonUseCase = ListPokemons(service: pokemonService)
+        let getPokemonUseCase = GetPokemonDetail(service: pokemonService)
         
-        let viewModel = HomeViewModel(signOutUseCase: signOutUseCase, listPokemonsUseCase: listPokemonUseCase, onSignOut: onSignOut)
+        let viewModel = HomeViewModel(signOutUseCase: signOutUseCase, listPokemonsUseCase: listPokemonUseCase, getPokemonDetailUseCase: getPokemonUseCase, onSignOut: onSignOut)
         
         return HomeView(viewModel: viewModel)
     }

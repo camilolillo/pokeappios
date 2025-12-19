@@ -4,14 +4,31 @@ protocol ListPokemonsProtocol {
     func execute(limit: Int, offset: Int) async throws -> [PokemonItem]
 }
 
-final class ListPokemons: ListPokemonsProtocol {
+final class ListPokemons {
 
     private let service: PokemonServiceProtocol
 
     init(service: PokemonServiceProtocol) {
         self.service = service
     }
+}
 
+private extension ListPokemons {
+    static func extractID(from urlString: String) -> Int? {
+        urlString
+            .split(separator: "/")
+            .compactMap { Int($0) }
+            .last
+    }
+
+    static func buildImageURL(from id: Int) -> URL? {
+        URL(string:
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
+        )
+    }
+}
+
+extension ListPokemons: ListPokemonsProtocol {
     func execute(limit: Int, offset: Int) async throws -> [PokemonItem] {
         let response = try await service.fetchPokemonList(limit: limit, offset: offset)
 
@@ -29,21 +46,5 @@ final class ListPokemons: ListPokemonsProtocol {
                 imageURL: imageURL
             )
         }
-    }
-}
-
-private extension ListPokemons {
-
-    static func extractID(from urlString: String) -> Int? {
-        urlString
-            .split(separator: "/")
-            .compactMap { Int($0) }
-            .last
-    }
-
-    static func buildImageURL(from id: Int) -> URL? {
-        URL(string:
-            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
-        )
     }
 }
